@@ -9,6 +9,7 @@ import android.util.Log
 import android.widget.Button
 import com.imploded.kotlingameapp.R
 import com.imploded.kotlingameapp.ViewModels.LoginViewModel
+import com.imploded.kotlingameapp.ViewModels.onUpdateUi
 import com.imploded.kotlingameapp.repository.LoginRepository
 import com.imploded.kotlingameapp.utils.afterTextChanged
 import org.jetbrains.anko.doAsync
@@ -17,15 +18,16 @@ import org.w3c.dom.Text
 
 class LoginActivity : AppCompatActivity() {
 
-    private val viewModel: LoginViewModel = LoginViewModel()
+    private val viewModel: LoginViewModel = LoginViewModel(object: onUpdateUi {
+        override fun invoke(isValid: Boolean) {
+            loginButton.isEnabled = isValid
+        }
+    })
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        viewModel.onDataUpdated = {
-
-        }
         userNameEditText.afterTextChanged { viewModel.userName = it }
         passwordEditText.afterTextChanged { viewModel.password = it }
         /*
