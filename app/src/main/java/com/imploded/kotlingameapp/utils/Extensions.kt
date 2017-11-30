@@ -1,9 +1,14 @@
 package com.imploded.kotlingameapp.utils
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
+import android.widget.Toast
 import com.google.gson.GsonBuilder
+import java.time.Duration
 
 /**
  * Created by Mikael on 2017-11-29.
@@ -34,4 +39,14 @@ fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
             afterTextChanged.invoke(editable.toString())
         }
     })
+}
+
+fun Context.toast(message: CharSequence, duration: Int = Toast.LENGTH_SHORT) {
+    Toast.makeText(this, message, duration).show()
+}
+
+public inline fun <reified T : Activity> Context.startActivity(vararg params: Pair<String, String>) {
+    val intent = Intent( this, T::class.java)
+    params.forEach { intent.putExtra(it.first, it.second) }
+    startActivity (intent)
 }

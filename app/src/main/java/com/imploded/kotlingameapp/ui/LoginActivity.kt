@@ -11,7 +11,9 @@ import com.imploded.kotlingameapp.R
 import com.imploded.kotlingameapp.ViewModels.LoginViewModel
 import com.imploded.kotlingameapp.ViewModels.onUpdateUi
 import com.imploded.kotlingameapp.repository.LoginRepository
+import com.imploded.kotlingameapp.repository.OnLoginStatus
 import com.imploded.kotlingameapp.utils.afterTextChanged
+import com.imploded.kotlingameapp.utils.toast
 import org.jetbrains.anko.doAsync
 import kotlinx.android.synthetic.main.activity_login.*
 import org.w3c.dom.Text
@@ -30,6 +32,8 @@ class LoginActivity : AppCompatActivity() {
 
         userNameEditText.afterTextChanged { viewModel.userName = it }
         passwordEditText.afterTextChanged { viewModel.password = it }
+        userNameEditText.setText("mikael")
+        passwordEditText.setText("1234")
         /*
         userNameEditText.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -58,7 +62,13 @@ class LoginActivity : AppCompatActivity() {
 
         loginButton.setOnClickListener {
             val repository = LoginRepository()
-            repository.Login(userNameEditText.text.toString(), passwordEditText.text.toString())
+            repository.Login(userNameEditText.text.toString(), passwordEditText.text.toString(), object: OnLoginStatus {
+                override fun invoke(loginOk: Boolean) {
+                    if (!loginOk) toast("Could not login!") else {
+                        startActivity<MainActivity>(MainActivity.ID to it.id)
+                    }
+                }
+            })
         }
     }
 }
