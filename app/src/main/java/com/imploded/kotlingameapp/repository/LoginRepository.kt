@@ -2,6 +2,7 @@ package com.imploded.kotlingameapp.repository
 
 import android.util.Log
 import com.github.kittinunf.fuel.Fuel
+import com.github.kittinunf.fuel.httpPost
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.imploded.kotlingameapp.model.LoginRequest
@@ -18,9 +19,16 @@ class LoginRepository {
         val request = LoginRequest(userName, password)
         val json = request.asJson
         Log.d("json", json)
-        Fuel.post(url).body(request.asJson).response{request, response, result ->
+
+        val req = url.httpPost().body(json)
+        req.httpHeaders["Content-Type"] = "application/json"
+        req.response { request, response, result ->
             Log.d("res", result.toString())
         }
+
+//        Fuel.post(url).body(request.asJson).response{request, response, result ->
+//            Log.d("res", result.toString())
+//        }
 
         return true
     }
