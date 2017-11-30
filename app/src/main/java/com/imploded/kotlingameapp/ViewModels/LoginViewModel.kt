@@ -9,7 +9,6 @@ import kotlin.properties.ObservableProperty
  */
 class LoginViewModel(private val updateUi: onUpdateUi){
 
-
     fun isValid(): Boolean = !userName.isNullOrEmpty() and !password.isNullOrEmpty()
 
     var userName: String = ""
@@ -24,8 +23,6 @@ class LoginViewModel(private val updateUi: onUpdateUi){
             updateUi(isValid())
             Log.d("ViewModel", "password:" + value + ", f:" + field + ", p:" + password)
         }
-
-
 }
 
 interface onUpdateUi {
