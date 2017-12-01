@@ -61,14 +61,24 @@ class LoginActivity : AppCompatActivity() {
 
 
         loginButton.setOnClickListener {
+            viewModel.login(object: OnLoginStatus{
+                override fun invoke(loginOk: Boolean) {
+                    runOnUiThread {
+                        if (loginOk) toast("Good to go!") else toast("Failed!!")
+                    }
+                }
+            })
+            //if (viewModel.login()) toast("Good to go!") else toast("Failed!!")
+            /*
             val repository = LoginRepository()
             repository.Login(userNameEditText.text.toString(), passwordEditText.text.toString(), object: OnLoginStatus {
                 override fun invoke(loginOk: Boolean) {
                     if (!loginOk) toast("Could not login!") else {
-                        startActivity<MainActivity>(MainActivity.ID to it.id)
+                        toast("Will show main activity")
+                        //startActivity<MainActivity>(MainActivity.ID to it.id)
                     }
                 }
-            })
+            })*/
         }
     }
 }

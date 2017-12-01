@@ -1,6 +1,10 @@
 package com.imploded.kotlingameapp.ViewModels
 
 import android.util.Log
+import com.imploded.kotlingameapp.repository.LoginRepository
+import com.imploded.kotlingameapp.repository.OnLoginStatus
+import com.imploded.kotlingameapp.utils.toast
+import kotlinx.android.synthetic.main.activity_login.*
 import kotlin.properties.Delegates
 import kotlin.properties.ObservableProperty
 
@@ -23,6 +27,15 @@ class LoginViewModel(private val updateUi: onUpdateUi){
             updateUi(isValid())
             Log.d("ViewModel", "password:" + value + ", f:" + field + ", p:" + password)
         }
+
+    fun login(loginStatus: OnLoginStatus) {
+        val repository = LoginRepository()
+        repository.login(userName, password, object: OnLoginStatus {
+            override fun invoke(loginOk: Boolean) {
+                loginStatus(loginOk)
+            }
+        })
+    }
 }
 
 interface onUpdateUi {
