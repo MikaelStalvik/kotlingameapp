@@ -11,33 +11,37 @@ import kotlin.properties.ObservableProperty
 /**
  * Created by l19548726 on 2017-11-30.
  */
-class LoginViewModel(private val updateUi: onUpdateUi){
+class LoginViewModel(private val updateUiListener: UpdateUiListener){
 
     fun isValid(): Boolean = !userName.isNullOrEmpty() and !password.isNullOrEmpty()
 
     var userName: String = ""
         set(value) {
             field = value
-            updateUi(isValid())
+            updateUiListener.updateUi(isValid())
             Log.d("ViewModel", "username:" + value + ", f:" + field + ", p:" + userName )
         }
     var password: String = ""
         set(value) {
             field = value
-            updateUi(isValid())
+            updateUiListener.updateUi(isValid())
             Log.d("ViewModel", "password:" + value + ", f:" + field + ", p:" + password)
         }
 
     fun login(loginStatus: OnLoginStatus) {
         val repository = LoginRepository()
-        repository.login(userName, password, object: OnLoginStatus {
-            override fun invoke(loginOk: Boolean) {
-                loginStatus(loginOk)
-            }
-        })
+
+//        repository.login(userName, password, object: OnLoginStatus {
+//            override fun invoke(loginOk: Boolean) {
+//                loginStatus(loginOk)
+//            }
+//        })
+        repository.login(userName, password, loginStatus)
     }
+
 }
 
-interface onUpdateUi {
-    operator fun invoke(isValid: Boolean)
+interface UpdateUiListener {
+    fun updateUi(isValid: Boolean)
+    //operator fun invoke(isValid: Boolean)
 }

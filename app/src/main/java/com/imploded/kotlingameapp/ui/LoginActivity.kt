@@ -9,7 +9,7 @@ import android.util.Log
 import android.widget.Button
 import com.imploded.kotlingameapp.R
 import com.imploded.kotlingameapp.ViewModels.LoginViewModel
-import com.imploded.kotlingameapp.ViewModels.onUpdateUi
+import com.imploded.kotlingameapp.ViewModels.UpdateUiListener
 import com.imploded.kotlingameapp.repository.LoginRepository
 import com.imploded.kotlingameapp.repository.OnLoginStatus
 import com.imploded.kotlingameapp.utils.afterTextChanged
@@ -20,12 +20,24 @@ import org.w3c.dom.Text
 
 class LoginActivity : AppCompatActivity() {
 
+    /*
     private val viewModel: LoginViewModel = LoginViewModel(object: onUpdateUi {
         override fun invoke(isValid: Boolean) {
             loginButton.isEnabled = isValid
         }
     })
+    */
+    private val viewModel: LoginViewModel = LoginViewModel(object: UpdateUiListener {
+        override fun updateUi(isValid: Boolean) {
+            loginButton.isEnabled = isValid
+        }
+    })
 
+    val checkLoginStatus = { status: Boolean ->
+        runOnUiThread {
+            if (status) toast("Good to go!") else toast("Failed!!")
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -63,11 +75,19 @@ class LoginActivity : AppCompatActivity() {
         loginButton.setOnClickListener {
             viewModel.login(object: OnLoginStatus{
                 override fun invoke(loginOk: Boolean) {
+                    checkLoginStatus(loginOk)
+                }
+            })
+            /*
+            viewModel.login(object: OnLoginStatus{
+                override fun invoke(loginOk: Boolean) {
                     runOnUiThread {
                         if (loginOk) toast("Good to go!") else toast("Failed!!")
                     }
                 }
             })
+            */
+
             //if (viewModel.login()) toast("Good to go!") else toast("Failed!!")
             /*
             val repository = LoginRepository()

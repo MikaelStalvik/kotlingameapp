@@ -39,13 +39,11 @@ class LoginRepository {
         val json = request.asJson
         Log.d("json", json)
 
-        var loginSuccess = false;
         val req = url.httpPost().body(json)
         req.httpHeaders["Content-Type"] = "application/json"
         doAsync {
             req.response { _, response, _ ->
-                loginSuccess = response.httpStatusCode == 200
-                loginStatus(loginSuccess)
+                loginStatus(response.httpStatusCode == 200)
             }
         }
     }
