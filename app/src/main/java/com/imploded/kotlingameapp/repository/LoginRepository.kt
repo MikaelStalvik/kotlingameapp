@@ -6,6 +6,7 @@ import com.github.kittinunf.fuel.httpPost
 import com.github.kittinunf.result.success
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.imploded.kotlingameapp.interfaces.LoginStatusListener
 import com.imploded.kotlingameapp.model.LoginRequest
 import com.imploded.kotlingameapp.utils.asJson
 import org.jetbrains.anko.doAsync
@@ -33,7 +34,7 @@ class LoginRepository {
 
         return true
     }*/
-    fun login(userName: String, password: String, loginStatus: OnLoginStatus) {
+    fun login(userName: String, password: String, loginStatus: LoginStatusListener) {
         val url = "http://kotlinserver.azurewebsites.net/login"
         val request = LoginRequest(userName, password)
         val json = request.asJson
@@ -43,12 +44,13 @@ class LoginRepository {
         req.httpHeaders["Content-Type"] = "application/json"
         doAsync {
             req.response { _, response, _ ->
+                //loginStatus.updateLoginStatus(response.httpStatusCode == 200)
                 loginStatus(response.httpStatusCode == 200)
             }
         }
     }
 }
 
-interface OnLoginStatus{
-    operator fun invoke(loginOk: Boolean)
-}
+//interface OnLoginStatus{
+//    operator fun invoke(loginOk: Boolean)
+//}

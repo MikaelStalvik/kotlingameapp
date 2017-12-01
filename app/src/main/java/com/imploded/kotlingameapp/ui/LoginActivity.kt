@@ -1,22 +1,14 @@
 package com.imploded.kotlingameapp.ui
 
-import android.content.Context
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
-import android.widget.Button
+import android.support.v7.app.AppCompatActivity
 import com.imploded.kotlingameapp.R
 import com.imploded.kotlingameapp.ViewModels.LoginViewModel
-import com.imploded.kotlingameapp.ViewModels.UpdateUiListener
-import com.imploded.kotlingameapp.repository.LoginRepository
-import com.imploded.kotlingameapp.repository.OnLoginStatus
+import com.imploded.kotlingameapp.interfaces.LoginStatusListener
+import com.imploded.kotlingameapp.interfaces.UpdateUiListener
 import com.imploded.kotlingameapp.utils.afterTextChanged
 import com.imploded.kotlingameapp.utils.toast
-import org.jetbrains.anko.doAsync
 import kotlinx.android.synthetic.main.activity_login.*
-import org.w3c.dom.Text
 
 class LoginActivity : AppCompatActivity() {
 
@@ -27,10 +19,12 @@ class LoginActivity : AppCompatActivity() {
         }
     })
     */
+    fun updateView(isValid: Boolean) {
+        loginButton.isEnabled = isValid
+    }
+
     private val viewModel: LoginViewModel = LoginViewModel(object: UpdateUiListener {
-        override fun updateUi(isValid: Boolean) {
-            loginButton.isEnabled = isValid
-        }
+        override fun invoke(valid: Boolean) = updateView(valid)
     })
 
     val checkLoginStatus = { status: Boolean ->
@@ -73,10 +67,12 @@ class LoginActivity : AppCompatActivity() {
 
 
         loginButton.setOnClickListener {
-            viewModel.login(object: OnLoginStatus{
+            viewModel.login(object: LoginStatusListener{
+                override fun invoke(valid: Boolean) = checkLoginStatus(valid)
+                /*
                 override fun invoke(loginOk: Boolean) {
                     checkLoginStatus(loginOk)
-                }
+                }*/
             })
             /*
             viewModel.login(object: OnLoginStatus{
