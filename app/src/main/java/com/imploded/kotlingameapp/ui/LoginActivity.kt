@@ -1,12 +1,18 @@
 package com.imploded.kotlingameapp.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.imploded.kotlingameapp.R
 import com.imploded.kotlingameapp.ViewModels.LoginViewModel
-import com.imploded.kotlingameapp.interfaces.LoginStatusListener
-import com.imploded.kotlingameapp.interfaces.UpdateUiListener
+import com.imploded.kotlingameapp.interfaces.OnLoginCallback
+import com.imploded.kotlingameapp.interfaces.OnUpdateUiCallback
+import com.imploded.kotlingameapp.model.Game
+import com.imploded.kotlingameapp.model.GameListResult
 import com.imploded.kotlingameapp.utils.afterTextChanged
+import com.imploded.kotlingameapp.utils.fromJson
 import com.imploded.kotlingameapp.utils.toast
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -23,13 +29,25 @@ class LoginActivity : AppCompatActivity() {
         loginButton.isEnabled = isValid
     }
 
-    private val viewModel: LoginViewModel = LoginViewModel(object: UpdateUiListener {
+    private val viewModel: LoginViewModel = LoginViewModel(object: OnUpdateUiCallback {
+        override fun updateUi(valid: Boolean) = updateView(valid)
+    })
+    /*
+    private val viewModel: LoginViewModel = LoginViewModel(object: OnUpdateUiCallback {
         override fun invoke(valid: Boolean) = updateView(valid)
     })
+    */
 
     val checkLoginStatus = { status: Boolean ->
         runOnUiThread {
-            if (status) toast("Good to go!") else toast("Failed!!")
+            if (status) {
+                val intent = Intent(this, MainActivity::class.java)
+                //intent.putExtra("key", value)
+                startActivity(intent)
+
+                //toast("Good to go!")
+            }
+            else toast("Failed!!")
         }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +57,7 @@ class LoginActivity : AppCompatActivity() {
         userNameEditText.afterTextChanged { viewModel.userName = it }
         passwordEditText.afterTextChanged { viewModel.password = it }
         userNameEditText.setText("mikael")
-        passwordEditText.setText("1234")
+        passwordEditText.setText("12345")
         /*
         userNameEditText.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -67,13 +85,12 @@ class LoginActivity : AppCompatActivity() {
 
 
         loginButton.setOnClickListener {
-            viewModel.login(object: LoginStatusListener{
+            viewModel.login(object: OnLoginCallback {
                 override fun invoke(valid: Boolean) = checkLoginStatus(valid)
-                /*
-                override fun invoke(loginOk: Boolean) {
-                    checkLoginStatus(loginOk)
-                }*/
             })
+
+
+
             /*
             viewModel.login(object: OnLoginStatus{
                 override fun invoke(loginOk: Boolean) {
