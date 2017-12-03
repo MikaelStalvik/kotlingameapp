@@ -4,12 +4,11 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import com.imploded.kotlingameapp.R
 import com.imploded.kotlingameapp.interfaces.OnItemClickListener
 import com.imploded.kotlingameapp.model.Game
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.item_game.view.*
 
 /**
  * Created by Mikael on 2017-12-03.
@@ -28,15 +27,15 @@ class GamesAdapter(private val games: List<Game>, private val itemClick: OnItemC
     override fun getItemCount(): Int = games.size
 
     class GameHolder(view: View, private val itemClick: OnItemClickListener) : RecyclerView.ViewHolder(view) {
-        private val pictureView = view.findViewById<ImageView>(R.id.imageViewPicture)
-        private val titleView = view.findViewById<TextView>(R.id.textViewTitle)
-        private val infoView = view.findViewById<TextView>(R.id.textViewInfo)
+//        private val pictureView = view.findViewById<ImageView>(R.id.imageViewPicture)
+//        private val titleView = view.findViewById<TextView>(R.id.textViewTitle)
+//        private val infoView = view.findViewById<TextView>(R.id.textViewInfo)
 
         fun bindGame(game: Game) {
             with(game) {
-                Picasso.with(itemView.context).load(picture).into(pictureView)
-                titleView.text = name
-                infoView.text = "$releaseYear, $publisher"
+                Picasso.with(itemView.context).load(picture).into(itemView.imageViewPicture)
+                itemView.textViewTitle.text = name
+                itemView.textViewInfo.text = "$releaseYear, $publisher"
                 itemView.setOnClickListener{itemClick(this)}
             }
         }
