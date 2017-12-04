@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.imploded.kotlingameapp.R
-import com.imploded.kotlingameapp.ViewModels.MainViewModel
+import com.imploded.kotlingameapp.viewmodels.MainViewModel
 import com.imploded.kotlingameapp.adapters.GamesAdapter
 import com.imploded.kotlingameapp.interfaces.OnItemClickListener
 import com.imploded.kotlingameapp.model.Game
@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun openDetail(game: Game) {
         val intent = Intent(this, GameDetailActivity::class.java)
+        intent.putExtra("id", game.id)
         startActivity(intent)
     }
 
@@ -39,7 +40,6 @@ class MainActivity : AppCompatActivity() {
                 val adapter = GamesAdapter(games, object: OnItemClickListener{
                     override fun invoke(game: Game) {
                         openDetail(game)
-                        //toast(game.name)
                     }
                 })
                 recyclerView.adapter = adapter

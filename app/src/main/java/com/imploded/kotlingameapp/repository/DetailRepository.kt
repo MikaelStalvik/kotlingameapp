@@ -6,13 +6,12 @@ import com.imploded.kotlingameapp.utils.fromJson
 import java.net.URL
 
 /**
- * Created by Mikael on 2017-12-03.
+ * Created by l19548726 on 2017-12-04.
  */
-class MainRepository {
-
-    fun getGames() : List<Game> {
-        val url = "http://kotlinserver.azurewebsites.net/list"
+class DetailRepository {
+    fun getGame(id: String) : Game {
+        val url = "http://kotlinserver.azurewebsites.net/$id"
         val json = URL(url).readText()
-        return Gson().fromJson<List<Game>>(json)
+        return Gson().fromJson<Game>(json)
     }
 }

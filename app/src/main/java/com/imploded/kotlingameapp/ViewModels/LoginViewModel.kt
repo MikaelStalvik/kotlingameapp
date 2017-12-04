@@ -1,6 +1,5 @@
-package com.imploded.kotlingameapp.ViewModels
+package com.imploded.kotlingameapp.viewmodels
 
-import android.util.Log
 import com.imploded.kotlingameapp.interfaces.OnLoginCallback
 import com.imploded.kotlingameapp.interfaces.OnUpdateUiCallback
 import com.imploded.kotlingameapp.repository.LoginRepository
@@ -16,29 +15,16 @@ class LoginViewModel(private val updateUiCallback: OnUpdateUiCallback){
         set(value) {
             field = value
             updateUiCallback.updateUi(isValid())
-            Log.d("ViewModel", "username:$value, f:$field, p:$userName")
         }
     var password: String = ""
         set(value) {
             field = value
             updateUiCallback.updateUi(isValid())
-            Log.d("ViewModel", "password:$value, f:$field, p:$password")
         }
 
     fun login(loginCallback: OnLoginCallback) {
         val repository = LoginRepository()
-
-//        repository.login(userName, password, object: OnLoginStatus {
-//            override fun invoke(loginOk: Boolean) {
-//                loginCallback(loginOk)
-//            }
-//        })
         repository.login(userName, password, loginCallback)
     }
 
 }
-
-//interface OnUpdateUiCallback {
-//    fun updateUi(isValid: Boolean)
-//    //operator fun invoke(isValid: Boolean)
-//}

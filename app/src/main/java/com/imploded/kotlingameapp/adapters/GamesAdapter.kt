@@ -27,9 +27,6 @@ class GamesAdapter(private val games: List<Game>, private val itemClick: OnItemC
     override fun getItemCount(): Int = games.size
 
     class GameHolder(view: View, private val itemClick: OnItemClickListener) : RecyclerView.ViewHolder(view) {
-//        private val pictureView = view.findViewById<ImageView>(R.id.imageViewPicture)
-//        private val titleView = view.findViewById<TextView>(R.id.textViewTitle)
-//        private val infoView = view.findViewById<TextView>(R.id.textViewInfo)
 
         fun bindGame(game: Game) {
             with(game) {
