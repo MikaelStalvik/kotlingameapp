@@ -16,14 +16,14 @@ class SortingActivity : AppCompatActivity() {
         val SortingId = "SortingId"
     }
 
-    fun closeView() {
-        val mainIntent = Intent(this, MainActivity.javaClass)
+    private fun closeView() {
+        val result = Intent(this, MainActivity.javaClass)
         when {
-            sortingNameRadioButton.isChecked -> mainIntent.putExtra(SortingId, SortingNameId)
-            sortingPublisherRadioButton2.isChecked -> mainIntent.putExtra(SortingId, SortingPublisherId)
-            sortingPublisherRadioButton2.isChecked -> mainIntent.putExtra(SortingId, SortingReleaseYearId)
+            sortingNameRadioButton.isChecked -> result.putExtra(SortingId, SortingNameId)
+            sortingPublisherRadioButton.isChecked -> result.putExtra(SortingId, SortingPublisherId)
+            sortingReleaseYearRadioButton.isChecked -> result.putExtra(SortingId, SortingReleaseYearId)
         }
-        setResult(Activity.RESULT_OK, mainIntent)
+        setResult(Activity.RESULT_OK, result)
         finish()
     }
     override fun onCreate(savedInstanceState: Bundle?) {

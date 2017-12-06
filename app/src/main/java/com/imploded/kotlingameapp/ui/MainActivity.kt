@@ -22,6 +22,8 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         val RequestSortCode = 303
+        lateinit var recyclerView: RecyclerView
+            private set
     }
     private val viewModel = MainViewModel()
 
@@ -35,11 +37,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var recyclerView = findViewById<RecyclerView>(R.id.game_list)
+        recyclerView = findViewById<RecyclerView>(R.id.game_list)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         doAsync {
-            val games = viewModel.games
+            val games = viewModel.getGamesForView()
             uiThread {
                 val adapter = GamesAdapter(games, object: OnItemClickListener{
                     override fun invoke(game: Game) {
@@ -67,7 +69,7 @@ class MainActivity : AppCompatActivity() {
         if (resultCode == Activity.RESULT_OK) {
             when(requestCode) {
                 RequestSortCode -> {
-                    Log.d("hej", "got result!")
+                    updateSorting(data?.getStringExtra(SortingActivity.SortingId).toString())
                 }
                 else -> super.onActivityResult(requestCode, resultCode, data)
 
@@ -75,6 +77,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun updateSorting(sorting: String) {
+        viewModel.activeSorting = viewModel.translateSortingArgument(sorting)
+         val adapter = GamesAdapter(viewModel.getGamesForView(), object: OnItemClickListener{
+            override fun invoke(game: Game) {
+                openDetail(game)
+            }
+        })
+        recyclerView.adapter = adapter
+    }
     fun sortingView() {
         val intent = Intent(this, SortingActivity::class.java)
         startActivityForResult(intent, RequestSortCode)
