@@ -10,10 +10,21 @@ import com.imploded.kotlingameapp.ui.SortingActivity
 class MainViewModel {
 
     var activeSorting = SortingActivity.SortingNameId
-    var ascending = true
+    private var ascending = true
 
     private val games: List<Game> by lazy {
         MainRepository().getGames()
+    }
+
+
+    fun getAllPlatforms(): Map<String, Int> {
+        val list = mutableListOf<String>()
+
+        games.forEach({
+            list.addAll(it.platforms)
+        })
+
+        return list.groupingBy { it }.eachCount()
     }
 
     fun getGamesForView(): List<Game> {

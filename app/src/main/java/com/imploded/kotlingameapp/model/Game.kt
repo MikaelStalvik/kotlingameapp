@@ -12,5 +12,6 @@ data class Game(
         @SerializedName("Platform")val platform: String,
         @SerializedName("Publisher")val publisher: String,
         @SerializedName("ReleaseYear")val releaseYear: Int,
-        @SerializedName("Picture")val picture: String
+        @SerializedName("Picture")val picture: String,
+        @SerializedName("Platforms")val platforms: List<String>
 )
