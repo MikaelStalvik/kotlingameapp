@@ -9,6 +9,8 @@ import android.widget.Toast
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
+import com.imploded.kotlingameapp.ui.SortingActivity
+import com.imploded.kotlingameapp.viewmodels.MainViewModel
 import com.squareup.picasso.Picasso
 
 /**
@@ -56,3 +58,5 @@ inline fun consume(f: () -> Unit): Boolean {
     f()
     return true
 }
+
+

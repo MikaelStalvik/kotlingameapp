@@ -9,74 +9,47 @@ import com.imploded.kotlingameapp.ui.SortingActivity
  */
 class MainViewModel {
 
-    companion object {
-        val SortedByName = "SortedByName"
-        val SortedByPublisher = "SortedByPublisher"
-        val SortedByReleaseYear = "SortedByReleaseYear"
-    }
-
-    var activeSorting = SortedByName
-    var ascending = false
+    var activeSorting = SortingActivity.SortingNameId
+    var ascending = true
 
     private val games: List<Game> by lazy {
         MainRepository().getGames()
     }
 
     fun getGamesForView(): List<Game> {
-        when (activeSorting) {
-            SortedByName -> return gamesSortedByName()
-            SortedByPublisher -> return gamesSortedByPublisher()
-            SortedByReleaseYear -> return gamesSortedByYear()
-            else -> return gamesSortedByName()
+        return when (activeSorting) {
+            SortingActivity.SortingNameId -> gamesSortedByName()
+            SortingActivity.SortingPublisherId -> gamesSortedByPublisher()
+            SortingActivity.SortingReleaseYearId -> gamesSortedByYear()
+            else -> gamesSortedByName()
         }
     }
 
-    fun translateSortingArgument(param: String): String {
-        when (param) {
-            SortingActivity.SortingNameId -> return SortedByName
-            SortingActivity.SortingPublisherId -> return SortedByPublisher
-            SortingActivity.SortingReleaseYearId -> return SortedByReleaseYear
-            else -> return SortedByName
-        }
-    }
-
-    fun gamesSortedByName(): List<Game> {
+    private fun updateSorting(newSort: String) {
         val oldSorting = activeSorting
-        activeSorting = SortedByName
-        if (oldSorting == activeSorting) {
-            ascending = !ascending
+        activeSorting = newSort
+        ascending = when (oldSorting) {
+            activeSorting -> !ascending
+            else -> true
         }
-        else {
-            ascending = true
-        }
+    }
+
+    private fun gamesSortedByName(): List<Game> {
+        updateSorting(SortingActivity.SortingNameId)
         if (ascending)
             return games.sortedBy { game -> game.name }
         return games.sortedByDescending { game -> game.name }
     }
 
-    fun gamesSortedByPublisher(): List<Game> {
-        val oldSorting = activeSorting
-        activeSorting = SortedByPublisher
-        if (oldSorting == activeSorting) {
-            ascending = !ascending
-        }
-        else {
-            ascending = true
-        }
+    private fun gamesSortedByPublisher(): List<Game> {
+        updateSorting(SortingActivity.SortingPublisherId)
         if (ascending)
             return games.sortedBy { game -> game.publisher }
         return games.sortedByDescending { game -> game.publisher }
     }
 
-    fun gamesSortedByYear(): List<Game> {
-        val oldSorting = activeSorting
-        activeSorting = SortedByReleaseYear
-        if (oldSorting == activeSorting) {
-            ascending = !ascending
-        }
-        else {
-            ascending = true
-        }
+    private fun gamesSortedByYear(): List<Game> {
+        updateSorting(SortingActivity.SortingReleaseYearId)
         if (ascending)
             return games.sortedBy { game -> game.releaseYear }
         return games.sortedByDescending { game -> game.releaseYear }

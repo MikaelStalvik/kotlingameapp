@@ -30,6 +30,12 @@ class SortingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sorting)
 
+        var activeSorting = intent.getStringExtra(SortingId)
+        when(activeSorting) {
+            SortingNameId -> sortingNameRadioButton.isChecked = true
+            SortingPublisherId -> sortingPublisherRadioButton.isChecked = true
+            SortingReleaseYearId -> sortingReleaseYearRadioButton.isChecked = true
+        }
         applySortingButton.setOnClickListener({
             closeView()
         })

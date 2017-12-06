@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import com.imploded.kotlingameapp.R
@@ -22,10 +21,9 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         val RequestSortCode = 303
-        lateinit var recyclerView: RecyclerView
-            private set
     }
     private val viewModel = MainViewModel()
+    private var recyclerView: RecyclerView? = null
 
     private fun openDetail(game: Game) {
         val intent = Intent(this, DetailActivity::class.java)
@@ -37,18 +35,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        recyclerView = findViewById<RecyclerView>(R.id.game_list)
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView = findViewById(R.id.game_list)
+        recyclerView?.layoutManager = LinearLayoutManager(this)
 
         doAsync {
-            val games = viewModel.getGamesForView()
+            viewModel.getGamesForView()
             uiThread {
-                val adapter = GamesAdapter(games, object: OnItemClickListener{
-                    override fun invoke(game: Game) {
-                        openDetail(game)
-                    }
-                })
-                recyclerView.adapter = adapter
+                updateSorting(viewModel.activeSorting)
             }
         }
     }
@@ -59,8 +52,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when(item.itemId) {
-        R.id.action_sorting -> consume { sortingView()}
-        R.id.action_filter -> consume { filterView() }
+        R.id.action_sorting -> consume { showSortingView()}
+        R.id.action_filter -> consume { showFilterView() }
         else -> super.onOptionsItemSelected(item)
     }
 
@@ -72,26 +65,27 @@ class MainActivity : AppCompatActivity() {
                     updateSorting(data?.getStringExtra(SortingActivity.SortingId).toString())
                 }
                 else -> super.onActivityResult(requestCode, resultCode, data)
-
             }
         }
     }
 
-    fun updateSorting(sorting: String) {
-        viewModel.activeSorting = viewModel.translateSortingArgument(sorting)
+    private fun updateSorting(sorting: String) {
+        viewModel.activeSorting = sorting
          val adapter = GamesAdapter(viewModel.getGamesForView(), object: OnItemClickListener{
             override fun invoke(game: Game) {
                 openDetail(game)
             }
         })
-        recyclerView.adapter = adapter
+        recyclerView?.adapter = adapter
     }
-    fun sortingView() {
+
+    private fun showSortingView() {
         val intent = Intent(this, SortingActivity::class.java)
+        intent.putExtra(SortingActivity.SortingId, viewModel.activeSorting)
         startActivityForResult(intent, RequestSortCode)
     }
 
-    fun filterView() {
+    fun showFilterView() {
 
     }
 
