@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
 
-    fun updateView(isValid: Boolean) {
+    private fun updateView(isValid: Boolean) {
         loginButton.isEnabled = isValid
     }
 
@@ -21,7 +21,7 @@ class LoginActivity : AppCompatActivity() {
         override fun updateUi(valid: Boolean) = updateView(valid)
     })
 
-    val checkLoginStatus = { status: Boolean ->
+    private val checkLoginStatus = { status: Boolean ->
         runOnUiThread {
             if (status) {
                 val intent = Intent(this, MainActivity::class.java)

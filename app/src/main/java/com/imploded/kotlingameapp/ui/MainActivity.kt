@@ -15,15 +15,11 @@ import org.jetbrains.anko.uiThread
 
 class MainActivity : AppCompatActivity() {
 
-    companion object {
-        val ID = "MainActivity:id"
-    }
-
     private val viewModel = MainViewModel()
 
     private fun openDetail(game: Game) {
-        val intent = Intent(this, GameDetailActivity::class.java)
-        intent.putExtra("id", game.id)
+        val intent = Intent(this, DetailActivity::class.java)
+        intent.putExtra(DetailActivity.ID, game.id)
         startActivity(intent)
     }
 
@@ -35,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         doAsync {
-            val games = viewModel.getGames()
+            val games = viewModel.games
             uiThread {
                 val adapter = GamesAdapter(games, object: OnItemClickListener{
                     override fun invoke(game: Game) {
