@@ -6,8 +6,10 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import com.google.gson.Gson
 import com.imploded.kotlingameapp.R
 import com.imploded.kotlingameapp.viewmodels.MainViewModel
 import com.imploded.kotlingameapp.adapters.GamesAdapter
@@ -16,6 +18,7 @@ import com.imploded.kotlingameapp.model.Game
 import com.imploded.kotlingameapp.utils.consume
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
+import java.util.logging.Filter
 
 class MainActivity : AppCompatActivity() {
 
@@ -86,7 +89,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showFilterView() {
-
+        val intent = Intent(this, FilterActivity::class.java)
+        val json = Gson().toJson(viewModel.getAllPlatforms())
+        Log.d("hej", json)
+        intent.putExtra(FilterActivity.FilterPlatformId, json)
+        startActivityForResult(intent, RequestSortCode)
     }
 
 
