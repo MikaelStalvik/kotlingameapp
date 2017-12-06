@@ -27,7 +27,10 @@ class LoginActivity : AppCompatActivity() {
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
             }
-            else toast("Failed!!")
+            else {
+                loginButton.isEnabled = true
+                toast("Failed to login!!")
+            }
         }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +43,7 @@ class LoginActivity : AppCompatActivity() {
         passwordEditText.setText("12345")
 
         loginButton.setOnClickListener {
+            loginButton.isEnabled = false
             viewModel.login(object: OnLoginCallback {
                 override fun invoke(valid: Boolean) = checkLoginStatus(valid)
             })

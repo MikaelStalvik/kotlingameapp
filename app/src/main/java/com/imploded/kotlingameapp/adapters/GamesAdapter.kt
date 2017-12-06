@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import com.imploded.kotlingameapp.R
 import com.imploded.kotlingameapp.interfaces.OnItemClickListener
 import com.imploded.kotlingameapp.model.Game
+import com.imploded.kotlingameapp.utils.load
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_game.view.*
 
@@ -30,7 +31,7 @@ class GamesAdapter(private val games: List<Game>, private val itemClick: OnItemC
 
         fun bindGame(game: Game) {
             with(game) {
-                Picasso.with(itemView.context).load(picture).into(itemView.imageViewPicture)
+                itemView.imageViewPicture.load(picture)
                 itemView.textViewTitle.text = name
                 itemView.textViewInfo.text = "$releaseYear, $publisher"
                 itemView.setOnClickListener{itemClick(this)}

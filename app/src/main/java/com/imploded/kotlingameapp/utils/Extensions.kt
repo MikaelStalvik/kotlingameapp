@@ -4,10 +4,12 @@ import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
+import com.squareup.picasso.Picasso
 
 /**
  * Created by Mikael on 2017-11-29.
@@ -45,3 +47,12 @@ fun Context.toast(message: CharSequence, duration: Int = Toast.LENGTH_SHORT) {
 }
 
 inline fun <reified T> Gson.fromJson(json: String) = this.fromJson<T>(json, object: TypeToken<T>() {}.type)
+
+fun ImageView.load(url: String) {
+    Picasso.with(context).load(url).into(this)
+}
+
+inline fun consume(f: () -> Unit): Boolean {
+    f()
+    return true
+}

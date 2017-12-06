@@ -13,6 +13,7 @@ class MainRepository {
     fun getGames() : List<Game> {
         val url = "http://kotlinserver.azurewebsites.net/list"
         val json = URL(url).readText()
-        return Gson().fromJson<List<Game>>(json)
+        return Gson().fromJson<List<Game>>(json).sortedBy { game -> game.name }
     }
+
 }
