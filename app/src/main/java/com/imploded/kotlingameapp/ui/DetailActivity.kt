@@ -28,7 +28,7 @@ class DetailActivity : AppCompatActivity() {
                     imageViewLarge.load(picture)
                     textViewPublisher.text = "Publisher: ${publisher}"
                     textViewReleaseYear.text = "Released: ${releaseYear}"
-                    textViewPlatform.text = "Platform: ${platform}"
+                    textViewPlatform.text = "Platform: ${platforms.joinToString()}"
                     textViewDescription.text = description
                 }
             }
