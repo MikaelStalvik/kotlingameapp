@@ -7,9 +7,6 @@ import com.imploded.kotlingameapp.repository.MainRepository
 import com.imploded.kotlingameapp.ui.SortingActivity
 import com.imploded.kotlingameapp.utils.fromJson
 
-/**
- * Created by Mikael on 2017-12-03.
- */
 class MainViewModel {
 
     var activeSorting = SortingActivity.SortingNameId
@@ -33,7 +30,7 @@ class MainViewModel {
     }
 
     fun getGamesForView(): List<Game> {
-        updateFilter(activeFilter)
+        activeFilter.updateFilter()
         return when (activeSorting) {
             SortingActivity.SortingNameId -> gamesSortedByName()
             SortingActivity.SortingPublisherId -> gamesSortedByPublisher()
@@ -72,13 +69,13 @@ class MainViewModel {
         return activeGames.sortedByDescending { game -> game.releaseYear }
     }
 
-    private fun updateFilter(json: String) {
-        if (json.isNullOrEmpty()) {
+    private fun String.updateFilter() {
+        if (isEmpty()) {
             activeGames = allGames
             return
         }
-        activeFilter = json
-        val activeFilter = Gson().fromJson<List<FilterItem>>(json)
+        activeFilter = this
+        val activeFilter = Gson().fromJson<List<FilterItem>>(this)
 
         val g = mutableListOf<Game>()
         val ps = activeFilter.filter { p -> p.checked }.map { p -> p.name }
@@ -91,17 +88,6 @@ class MainViewModel {
                 }
             }
         }
-        activeGames = g // g.distinctBy { g -> g.id }
-
-        /*
-        var g = mutableListOf<Game>()
-        val ps = listOf("Amiga", "PC")
-        val pp = games.forEach{ game ->
-            game.platforms.forEach{
-                if (ps.contains(it)) g.add(game)
-            }
-        }
-        */
-        val k = 123
+        activeGames = g
     }
 }

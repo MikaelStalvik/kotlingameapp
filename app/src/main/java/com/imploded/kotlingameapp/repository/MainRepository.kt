@@ -5,9 +5,6 @@ import com.imploded.kotlingameapp.model.Game
 import com.imploded.kotlingameapp.utils.fromJson
 import java.net.URL
 
-/**
- * Created by Mikael on 2017-12-03.
- */
 class MainRepository {
 
     fun getGames() : List<Game> {

@@ -9,9 +9,6 @@ import com.imploded.kotlingameapp.interfaces.OnItemCheckedListener
 import com.imploded.kotlingameapp.model.FilterItem
 import kotlinx.android.synthetic.main.row_filter.view.*
 
-/**
- * Created by l19548726 on 2017-12-07.
- */
 class FilterAdapter(private val filters: List<FilterItem>, private val onCheckedChangeListener: OnItemCheckedListener) : RecyclerView.Adapter<FilterAdapter.FilterHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilterHolder {

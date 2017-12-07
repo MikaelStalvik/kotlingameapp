@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import com.google.gson.Gson
@@ -85,8 +84,7 @@ class MainActivity : AppCompatActivity() {
         recyclerView?.adapter = adapter
     }
 
-    fun updateViewWithFilter(filter: String) {
-        //viewModel.Filter(filter)
+    private fun updateViewWithFilter(filter: String) {
         viewModel.activeFilter = filter
         updateView(viewModel.activeSorting)
     }

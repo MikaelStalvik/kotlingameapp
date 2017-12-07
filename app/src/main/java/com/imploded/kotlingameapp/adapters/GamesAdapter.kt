@@ -10,9 +10,6 @@ import com.imploded.kotlingameapp.model.Game
 import com.imploded.kotlingameapp.utils.load
 import kotlinx.android.synthetic.main.row_game.view.*
 
-/**
- * Created by Mikael on 2017-12-03.
- */
 class GamesAdapter(private val games: List<Game>, private val itemClick: OnItemClickListener) : RecyclerView.Adapter<GamesAdapter.GameHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameHolder {
