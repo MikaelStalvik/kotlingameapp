@@ -8,8 +8,7 @@ import com.imploded.kotlingameapp.R
 import com.imploded.kotlingameapp.interfaces.OnItemClickListener
 import com.imploded.kotlingameapp.model.Game
 import com.imploded.kotlingameapp.utils.load
-import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.item_game.view.*
+import kotlinx.android.synthetic.main.row_game.view.*
 
 /**
  * Created by Mikael on 2017-12-03.
@@ -17,7 +16,7 @@ import kotlinx.android.synthetic.main.item_game.view.*
 class GamesAdapter(private val games: List<Game>, private val itemClick: OnItemClickListener) : RecyclerView.Adapter<GamesAdapter.GameHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_game, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.row_game, parent, false)
         return GameHolder(view, itemClick)
     }
 

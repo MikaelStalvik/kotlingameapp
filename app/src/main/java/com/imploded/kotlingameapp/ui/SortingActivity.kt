@@ -17,7 +17,7 @@ class SortingActivity : AppCompatActivity() {
     }
 
     private fun closeView() {
-        val result = Intent(this, MainActivity.javaClass)
+        val result = Intent(this, MainActivity::class.java)
         when {
             sortingNameRadioButton.isChecked -> result.putExtra(SortingId, SortingNameId)
             sortingPublisherRadioButton.isChecked -> result.putExtra(SortingId, SortingPublisherId)
@@ -30,7 +30,7 @@ class SortingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sorting)
 
-        var activeSorting = intent.getStringExtra(SortingId)
+        val activeSorting = intent.getStringExtra(SortingId)
         when(activeSorting) {
             SortingNameId -> sortingNameRadioButton.isChecked = true
             SortingPublisherId -> sortingPublisherRadioButton.isChecked = true

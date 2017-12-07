@@ -18,12 +18,12 @@ import com.imploded.kotlingameapp.model.Game
 import com.imploded.kotlingameapp.utils.consume
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
-import java.util.logging.Filter
 
 class MainActivity : AppCompatActivity() {
 
     companion object {
         val RequestSortCode = 303
+        val RequestFilterCode = 304
     }
     private val viewModel = MainViewModel()
     private var recyclerView: RecyclerView? = null
@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         doAsync {
             viewModel.getGamesForView()
             uiThread {
-                updateSorting(viewModel.activeSorting)
+                updateView(viewModel.activeSorting)
             }
         }
     }
@@ -65,14 +65,17 @@ class MainActivity : AppCompatActivity() {
         if (resultCode == Activity.RESULT_OK) {
             when(requestCode) {
                 RequestSortCode -> {
-                    updateSorting(data?.getStringExtra(SortingActivity.SortingId).toString())
+                    updateView(data?.getStringExtra(SortingActivity.SortingId).toString())
+                }
+                RequestFilterCode -> {
+                    updateViewWithFilter(data?.getStringExtra(FilterActivity.FilterPlatformId).toString())
                 }
                 else -> super.onActivityResult(requestCode, resultCode, data)
             }
         }
     }
 
-    private fun updateSorting(sorting: String) {
+    private fun updateView(sorting: String) {
         viewModel.activeSorting = sorting
          val adapter = GamesAdapter(viewModel.getGamesForView(), object: OnItemClickListener{
             override fun invoke(game: Game) {
@@ -82,18 +85,24 @@ class MainActivity : AppCompatActivity() {
         recyclerView?.adapter = adapter
     }
 
+    fun updateViewWithFilter(filter: String) {
+        //viewModel.Filter(filter)
+        viewModel.activeFilter = filter
+        updateView(viewModel.activeSorting)
+    }
+
     private fun showSortingView() {
         val intent = Intent(this, SortingActivity::class.java)
         intent.putExtra(SortingActivity.SortingId, viewModel.activeSorting)
         startActivityForResult(intent, RequestSortCode)
     }
 
-    fun showFilterView() {
+    private fun showFilterView() {
         val intent = Intent(this, FilterActivity::class.java)
         val json = Gson().toJson(viewModel.getAllPlatforms())
-        Log.d("hej", json)
         intent.putExtra(FilterActivity.FilterPlatformId, json)
-        startActivityForResult(intent, RequestSortCode)
+        intent.putExtra(FilterActivity.ActiveFilterId, viewModel.activeFilter)
+        startActivityForResult(intent, RequestFilterCode)
     }
 
 

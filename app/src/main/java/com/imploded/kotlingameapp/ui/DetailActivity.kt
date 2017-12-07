@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity
 import com.imploded.kotlingameapp.R
 import com.imploded.kotlingameapp.utils.load
 import com.imploded.kotlingameapp.viewmodels.DetailViewModel
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_detail.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread

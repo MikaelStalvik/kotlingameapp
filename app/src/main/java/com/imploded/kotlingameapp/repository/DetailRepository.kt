@@ -17,10 +17,5 @@ class DetailRepository {
             return Gson().fromJson<Game>(json)
         }
     }
-    /*
-    fun getGame(id: String) : Game {
-        val url = "http://kotlinserver.azurewebsites.net/$id"
-        val json = URL(url).readText()
-        return Gson().fromJson<Game>(json)
-    }*/
+
 }
