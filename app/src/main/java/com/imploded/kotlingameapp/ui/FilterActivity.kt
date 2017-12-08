@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import com.imploded.kotlingameapp.R
 import com.imploded.kotlingameapp.adapters.FilterAdapter
 import com.imploded.kotlingameapp.interfaces.OnItemCheckedListener
@@ -23,7 +22,7 @@ class FilterActivity : AppCompatActivity() {
 
     private val viewModel = FilterViewModel()
 
-    private var recyclerView: RecyclerView? = null
+    lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +33,8 @@ class FilterActivity : AppCompatActivity() {
         viewModel.restoreActiveFilter(allPlatforms, activeFilter)
 
         recyclerView = filter_list
-        recyclerView?.layoutManager = LinearLayoutManager(this)
-        recyclerView?.adapter = FilterAdapter(viewModel.filterItems, object: OnItemCheckedListener{
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = FilterAdapter(viewModel.filterItems, object: OnItemCheckedListener{
             override fun invoke(filter: FilterItem, checked: Boolean) {
             }
 
