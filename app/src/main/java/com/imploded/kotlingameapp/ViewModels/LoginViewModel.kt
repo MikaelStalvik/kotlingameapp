@@ -20,6 +20,7 @@ class LoginViewModel(private val updateUiCallback: OnUpdateUiCallback){
         }
 
     fun login(loginCallback: OnLoginCallback) {
+        updateUiCallback.updateUi(false);
         val repository = LoginRepository()
         repository.login(userName, password, loginCallback)
     }

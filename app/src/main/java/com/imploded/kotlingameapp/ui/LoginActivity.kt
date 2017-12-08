@@ -43,7 +43,6 @@ class LoginActivity : AppCompatActivity() {
         passwordEditText.setText("12345")
 
         loginButton.setOnClickListener {
-            loginButton.isEnabled = false
             viewModel.login(object: OnLoginCallback {
                 override fun invoke(valid: Boolean) = checkLoginStatus(valid)
             })
