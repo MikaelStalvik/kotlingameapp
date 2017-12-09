@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
                     updateView(data?.getStringExtra(SortingActivity.SortingId).toString())
                 }
                 RequestFilterCode -> {
-                    updateViewWithFilter(data?.getStringExtra(FilterActivity.FilterPlatformId).toString())
+                    updateViewWithFilter(data?.getStringExtra(FilterActivity.ActiveFilterId).toString())
                 }
                 else -> super.onActivityResult(requestCode, resultCode, data)
             }
@@ -98,7 +98,7 @@ class MainActivity : AppCompatActivity() {
     private fun showFilterView() {
         val intent = Intent(this, FilterActivity::class.java)
         val json = Gson().toJson(viewModel.getAllPlatforms())
-        intent.putExtra(FilterActivity.FilterPlatformId, json)
+        intent.putExtra(FilterActivity.FilterAllPlatformsId, json)
         intent.putExtra(FilterActivity.ActiveFilterId, viewModel.activeFilter)
         startActivityForResult(intent, RequestFilterCode)
     }

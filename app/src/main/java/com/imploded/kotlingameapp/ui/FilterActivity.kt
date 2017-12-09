@@ -16,19 +16,19 @@ import kotlinx.android.synthetic.main.activity_filter.*
 class FilterActivity : AppCompatActivity() {
 
     companion object {
-        val FilterPlatformId = "FilterPlatformId"
+        val FilterAllPlatformsId = "FilterAllPlatformsId"
         val ActiveFilterId = "ActiveFilterId"
     }
 
     private val viewModel = FilterViewModel()
 
-    lateinit var recyclerView: RecyclerView
+    private lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_filter)
 
-        val allPlatforms = intent.getStringExtra(FilterPlatformId)
+        val allPlatforms = intent.getStringExtra(FilterAllPlatformsId)
         val activeFilter = intent.getStringExtra(ActiveFilterId)
         viewModel.restoreActiveFilter(allPlatforms, activeFilter)
 
@@ -42,9 +42,18 @@ class FilterActivity : AppCompatActivity() {
 
         filterButton.setOnClickListener{
             val result = Intent(this, MainActivity::class.java)
-            result.putExtra(FilterPlatformId, viewModel.getFilterItemsAsJson())
+            result.putExtra(ActiveFilterId, viewModel.getFilterItemsAsJson())
             setResult(Activity.RESULT_OK, result)
             finish()
+        }
+
+        allButton.setOnClickListener {
+            viewModel.selectAll()
+            recyclerView.adapter.notifyDataSetChanged()
+        }
+        noneButton.setOnClickListener{
+            viewModel.selectNone()
+            recyclerView.adapter.notifyDataSetChanged()
         }
     }
 }

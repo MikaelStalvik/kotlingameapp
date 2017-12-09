@@ -77,17 +77,17 @@ class MainViewModel {
         activeFilter = this
         val activeFilter = Gson().fromJson<List<FilterItem>>(this)
 
-        val g = mutableListOf<Game>()
-        val ps = activeFilter.filter { p -> p.checked }.map { p -> p.name }
+        val result = mutableListOf<Game>()
+        val selectedPlatforms = activeFilter.filter { p -> p.checked }.map { p -> p.name }
 
         allGames.forEach{
             val game = it
-            it.platforms.filter { ps.contains(it) }.map {
-                if (!g.contains(game)) {
-                    g.add(game)
+            it.platforms.filter { selectedPlatforms.contains(it) }.map {
+                if (!result.contains(game)) {
+                    result.add(game)
                 }
             }
         }
-        activeGames = g
+        activeGames = result
     }
 }

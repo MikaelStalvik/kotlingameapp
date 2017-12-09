@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">KotlinGameApp</string>
     <string name="login">Login</string>
+    <string name="failedToLogin">Failed to login</string>
 </resources>

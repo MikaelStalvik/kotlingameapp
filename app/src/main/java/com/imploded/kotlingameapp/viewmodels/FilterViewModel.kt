@@ -4,18 +4,15 @@ import com.google.gson.Gson
 import com.imploded.kotlingameapp.model.FilterItem
 import com.imploded.kotlingameapp.utils.fromJson
 
-/**
- * Created by l19548726 on 2017-12-07.
- */
 class FilterViewModel {
 
     lateinit var filterItems: List<FilterItem>
 
-    private fun getActiveFilters(filters: String, allPlatforms: List<String>): List<String> {
-        if (filters.isEmpty()) {
+    private fun getActiveFilters(activeFilter: String, allPlatforms: List<String>): List<String> {
+        if (activeFilter.isEmpty()) {
             return allPlatforms
         }
-        return Gson().fromJson<List<FilterItem>>(filters).filter { f -> f.checked }.map { f -> f.name }
+        return Gson().fromJson<List<FilterItem>>(activeFilter).filter { f -> f.checked }.map { f -> f.name }
     }
     fun restoreActiveFilter(allPlatforms: String, activeFilter: String) {
         val platforms = Gson().fromJson<Map<String, Int>>(allPlatforms)
@@ -30,6 +27,14 @@ class FilterViewModel {
 
     fun getFilterItemsAsJson(): String {
         return Gson().toJson(filterItems)
+    }
+
+    fun selectAll() {
+        for(item in filterItems) item.checked = true
+    }
+
+    fun selectNone() {
+        for(item in filterItems) item.checked = false
     }
 
 }
