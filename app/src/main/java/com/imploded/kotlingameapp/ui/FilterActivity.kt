@@ -6,10 +6,9 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import com.imploded.kotlingameapp.R
 import com.imploded.kotlingameapp.adapters.FilterAdapter
-import com.imploded.kotlingameapp.interfaces.OnItemCheckedListener
-import com.imploded.kotlingameapp.model.FilterItem
 import com.imploded.kotlingameapp.viewmodels.FilterViewModel
 import kotlinx.android.synthetic.main.activity_filter.*
 
@@ -34,11 +33,9 @@ class FilterActivity : AppCompatActivity() {
 
         recyclerView = filter_list
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = FilterAdapter(viewModel.filterItems, object: OnItemCheckedListener{
-            override fun invoke(filter: FilterItem, checked: Boolean) {
-            }
-
-        })
+        recyclerView.adapter = FilterAdapter(viewModel.filterItems, {
+            item, checked -> Log.d("FilterActivity", "$item checkedStateChanged: $checked")}
+        )
 
         filterButton.setOnClickListener{
             val result = Intent(this, MainActivity::class.java)

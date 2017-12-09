@@ -26,8 +26,8 @@
         <activity android:name=".ui.DetailActivity" />
         <activity
             android:name=".ui.SortingActivity"
-            android:label="Sorting" />
-        <activity android:name=".ui.FilterActivity"></activity>
+            android:label="Sort" />
+        <activity android:name=".ui.FilterActivity" android:label="Filter"></activity>
     </application>
 
 </manifest>

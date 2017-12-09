@@ -16,16 +16,6 @@ class SortingActivity : AppCompatActivity() {
         val SortingId = "SortingId"
     }
 
-    private fun closeView() {
-        val result = Intent(this, MainActivity::class.java)
-        when {
-            sortingNameRadioButton.isChecked -> result.putExtra(SortingId, SortingNameId)
-            sortingPublisherRadioButton.isChecked -> result.putExtra(SortingId, SortingPublisherId)
-            sortingReleaseYearRadioButton.isChecked -> result.putExtra(SortingId, SortingReleaseYearId)
-        }
-        setResult(Activity.RESULT_OK, result)
-        finish()
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sorting)
@@ -40,4 +30,16 @@ class SortingActivity : AppCompatActivity() {
             closeView()
         })
     }
+
+    private fun closeView() {
+        val result = Intent(this, MainActivity::class.java)
+        when {
+            sortingNameRadioButton.isChecked -> result.putExtra(SortingId, SortingNameId)
+            sortingPublisherRadioButton.isChecked -> result.putExtra(SortingId, SortingPublisherId)
+            sortingReleaseYearRadioButton.isChecked -> result.putExtra(SortingId, SortingReleaseYearId)
+        }
+        setResult(Activity.RESULT_OK, result)
+        finish()
+    }
+
 }

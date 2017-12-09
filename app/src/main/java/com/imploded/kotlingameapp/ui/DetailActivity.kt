@@ -24,11 +24,12 @@ class DetailActivity : AppCompatActivity() {
             viewModel.getGameFromServer(id)
             uiThread {
                 with(viewModel.game) {
+                    title = name
                     textViewDetailTitle.text = name
                     imageViewLarge.load(picture)
-                    textViewPublisher.text = "Publisher: ${publisher}"
-                    textViewReleaseYear.text = "Released: ${releaseYear}"
-                    textViewPlatform.text = "Platform: ${platforms.joinToString()}"
+                    textViewPublisher.text = getString(R.string.publisher) + ": " + publisher
+                    textViewReleaseYear.text = getString(R.string.releaseYear) + ": " + releaseYear
+                    textViewPlatform.text = getString(R.string.platforms) + ": " + platforms.joinToString()
                     textViewDescription.text = description
                 }
             }

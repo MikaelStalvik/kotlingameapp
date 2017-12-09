@@ -12,7 +12,6 @@ import com.google.gson.Gson
 import com.imploded.kotlingameapp.R
 import com.imploded.kotlingameapp.viewmodels.MainViewModel
 import com.imploded.kotlingameapp.adapters.GamesAdapter
-import com.imploded.kotlingameapp.interfaces.OnItemClickListener
 import com.imploded.kotlingameapp.model.Game
 import com.imploded.kotlingameapp.utils.consume
 import org.jetbrains.anko.doAsync
@@ -25,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         val RequestFilterCode = 304
     }
     private val viewModel = MainViewModel()
-    private var recyclerView: RecyclerView? = null
+    private lateinit var recyclerView: RecyclerView
 
     private fun openDetail(game: Game) {
         val intent = Intent(this, DetailActivity::class.java)
@@ -38,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         recyclerView = findViewById(R.id.game_list)
-        recyclerView?.layoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = LinearLayoutManager(this)
 
         doAsync {
             viewModel.getGamesForView()
@@ -76,12 +75,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateView(sorting: String) {
         viewModel.activeSorting = sorting
-         val adapter = GamesAdapter(viewModel.getGamesForView(), object: OnItemClickListener{
-            override fun invoke(game: Game) {
-                openDetail(game)
-            }
-        })
-        recyclerView?.adapter = adapter
+         val adapter = GamesAdapter(viewModel.getGamesForView(), {openDetail(it)})
+        recyclerView.adapter = adapter
     }
 
     private fun updateViewWithFilter(filter: String) {

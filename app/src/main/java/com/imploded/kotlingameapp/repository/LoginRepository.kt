@@ -2,13 +2,14 @@ package com.imploded.kotlingameapp.repository
 
 import com.github.kittinunf.fuel.httpPost
 import com.imploded.kotlingameapp.model.LoginRequest
+import com.imploded.kotlingameapp.utils.AppConstants
 import com.imploded.kotlingameapp.utils.asJson
 import org.jetbrains.anko.doAsync
 
 class LoginRepository {
 
     fun login(userName: String, password: String, loginCallback: (Boolean) -> Unit) {
-        val url = "http://kotlinserver.azurewebsites.net/login"
+        val url = AppConstants.LoginUrl
         val request = LoginRequest(userName, password)
 
         val req = url.httpPost().body(request.asJson)
