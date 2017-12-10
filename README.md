@@ -7,7 +7,7 @@ https://github.com/MikaelStalvik/javagameapp
 ## Requirements
 
 Android Studio 3.x is used for this project. Android SDK tools 26.x are required.
-Kotlin 1.51 or higher.
+Kotlin 1.1.61 or higher.
 
 ## Additional information
 
