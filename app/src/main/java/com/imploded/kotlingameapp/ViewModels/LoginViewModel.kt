@@ -1,10 +1,11 @@
 package com.imploded.kotlingameapp.viewmodels
 
-import com.imploded.kotlingameapp.repository.LoginRepository
+import com.imploded.kotlingameapp.interfaces.LoginRepositoryInterface
+import com.imploded.kotlingameapp.interfaces.LoginStatusListener
 
-class LoginViewModel(private val updateUiFunc: (Boolean) -> Unit){
+class LoginViewModel(private val repository: LoginRepositoryInterface, private val updateUiFunc: (Boolean) -> Unit){
 
-    private fun isValid(): Boolean = !userName.isEmpty() and !password.isEmpty()
+    fun isValid(): Boolean = !userName.isEmpty() and !password.isEmpty()
 
     var userName: String = ""
         set(value) {
@@ -17,10 +18,9 @@ class LoginViewModel(private val updateUiFunc: (Boolean) -> Unit){
             updateUiFunc(isValid())
         }
 
-    fun login(loginCallbackFunc: (Boolean) -> Unit) {
+    fun login(loginStatusListener: LoginStatusListener) {
         updateUiFunc(false)
-        val repository = LoginRepository()
-        repository.login(userName, password, loginCallbackFunc)
+        repository.login(userName, password, loginStatusListener)
     }
 
 }

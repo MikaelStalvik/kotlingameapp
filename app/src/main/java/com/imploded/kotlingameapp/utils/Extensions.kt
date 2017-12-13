@@ -12,9 +12,6 @@ import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import com.squareup.picasso.Picasso
 
-/**
- * Created by Mikael on 2017-11-29.
-*/
 val Any.asJson: String
     get() {
         val gson = GsonBuilder().create()
@@ -57,5 +54,3 @@ inline fun consume(f: () -> Unit): Boolean {
     f()
     return true
 }
-
-

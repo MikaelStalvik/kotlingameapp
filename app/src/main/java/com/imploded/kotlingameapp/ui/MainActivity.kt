@@ -15,6 +15,8 @@ import com.imploded.kotlingameapp.adapters.GamesAdapter
 import com.imploded.kotlingameapp.model.Game
 import com.imploded.kotlingameapp.utils.consume
 import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.startActivityForResult
 import org.jetbrains.anko.uiThread
 
 class MainActivity : AppCompatActivity() {
@@ -85,17 +87,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showSortingView() {
-        val intent = Intent(this, SortingActivity::class.java)
-        intent.putExtra(SortingActivity.SortingId, viewModel.activeSorting)
-        startActivityForResult(intent, RequestSortCode)
+        startActivityForResult<SortingActivity>(
+                RequestSortCode,
+                SortingActivity.SortingId to viewModel.activeSorting
+        )
     }
 
     private fun showFilterView() {
-        val intent = Intent(this, FilterActivity::class.java)
         val json = Gson().toJson(viewModel.getAllPlatforms())
-        intent.putExtra(FilterActivity.FilterAllPlatformsId, json)
-        intent.putExtra(FilterActivity.ActiveFilterId, viewModel.activeFilter)
-        startActivityForResult(intent, RequestFilterCode)
+        startActivityForResult<FilterActivity>(
+                RequestFilterCode,
+                FilterActivity.FilterAllPlatformsId to json,
+                FilterActivity.ActiveFilterId to viewModel.activeFilter
+        )
     }
 
 
