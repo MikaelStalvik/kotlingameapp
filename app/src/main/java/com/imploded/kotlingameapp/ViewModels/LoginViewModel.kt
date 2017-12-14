@@ -1,7 +1,7 @@
 package com.imploded.kotlingameapp.viewmodels
 
 import com.imploded.kotlingameapp.interfaces.LoginRepositoryInterface
-import com.imploded.kotlingameapp.interfaces.LoginStatusListener
+import org.jetbrains.anko.doAsync
 
 class LoginViewModel(private val repository: LoginRepositoryInterface, private val updateUiFunc: (Boolean) -> Unit){
 
@@ -18,9 +18,12 @@ class LoginViewModel(private val repository: LoginRepositoryInterface, private v
             updateUiFunc(isValid())
         }
 
-    fun login(loginStatusListener: LoginStatusListener) {
+    fun login(updateLoginStatusFunc: (Boolean) -> Unit) {
         updateUiFunc(false)
-        repository.login(userName, password, loginStatusListener)
+        doAsync {
+            val okResult = repository.login(userName, password)
+            updateLoginStatusFunc(okResult)
+        }
     }
 
 }

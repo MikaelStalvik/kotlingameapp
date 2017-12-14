@@ -25,8 +25,8 @@ class FilterAdapter(private val filters: List<FilterItem>, private val checkedCh
 
         fun bindGame(filter: FilterItem, checkedChangedFunc: (item: FilterItem, checked: Boolean) -> Unit) {
             with(filter) {
-                itemView.platformCheckBox.isChecked = filter.checked
-                itemView.platformCheckBox.text = filter.name
+                itemView.platformCheckBox.isChecked = checked
+                itemView.platformCheckBox.text = name
                 itemView.platformCheckBox.setOnCheckedChangeListener{ _, checked ->
                     this.checked = checked
                     checkedChangedFunc(this, checked)

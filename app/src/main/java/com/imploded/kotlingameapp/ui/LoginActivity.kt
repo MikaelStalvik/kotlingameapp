@@ -3,7 +3,6 @@ package com.imploded.kotlingameapp.ui
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.imploded.kotlingameapp.R
-import com.imploded.kotlingameapp.interfaces.LoginStatusListener
 import com.imploded.kotlingameapp.repository.LoginRepository
 import com.imploded.kotlingameapp.viewmodels.LoginViewModel
 import com.imploded.kotlingameapp.utils.afterTextChanged
@@ -20,16 +19,23 @@ class LoginActivity : AppCompatActivity() {
     private val viewModel: LoginViewModel = LoginViewModel(LoginRepository()){updateView(it)}
 
     private val checkLoginStatus = { status: Boolean ->
-        runOnUiThread {
-            if (status) {
-                startActivity<MainActivity>()
-            }
-            else {
-                loginButton.isEnabled = true
-                toast(getString(R.string.failedToLogin))
-            }
+        if (status) {
+            startActivity<MainActivity>()
+        }
+        else {
+            loginButton.isEnabled = true
+            toast(getString(R.string.failedToLogin))
         }
     }
+
+    private val showMainView = { startActivity<MainActivity>() }
+    private val failedLogin = {
+        runOnUiThread {
+            loginButton.isEnabled = true
+            toast(getString(R.string.failedToLogin))
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -39,12 +45,9 @@ class LoginActivity : AppCompatActivity() {
         userNameEditText.setText("mikael")
         passwordEditText.setText("12345")
 
+        val actions: Map<Boolean, () -> Unit> = mapOf(true to showMainView, false to failedLogin)
         loginButton.setOnClickListener {
-            viewModel.login(object: LoginStatusListener {
-                override fun invoke(status: Boolean) {
-                    checkLoginStatus(status)
-                }
-            })
+            viewModel.login { b-> actions[b]?.invoke()}
         }
     }
 }
