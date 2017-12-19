@@ -1,7 +1,7 @@
 # kotlingameapp
 
 Test application for Android written in Kotlin  using Android Studio.
-This project is not ment to show perfect design not code, it is ment as a project to compare how this Kotlin implementation will look compared to it's Java equivalent project:
+This project is not ment to show perfect design or code, it is ment as a project to compare how this Kotlin implementation will look compared to it's Java equivalent project:
 https://github.com/MikaelStalvik/javagameapp
 
 ## Requirements
