@@ -12,12 +12,13 @@ import org.jetbrains.anko.startActivity
 
 class LoginActivity : AppCompatActivity() {
 
+    private val viewModel: LoginViewModel = LoginViewModel(LoginRepository()){updateView(it)}
+
     private fun updateView(isValid: Boolean) {
         loginButton.isEnabled = isValid
     }
 
-    private val viewModel: LoginViewModel = LoginViewModel(LoginRepository()){updateView(it)}
-
+/*
     private val checkLoginStatus = { status: Boolean ->
         if (status) {
             startActivity<MainActivity>()
@@ -26,7 +27,7 @@ class LoginActivity : AppCompatActivity() {
             loginButton.isEnabled = true
             toast(getString(R.string.failedToLogin))
         }
-    }
+    }*/
 
     private val showMainView = { startActivity<MainActivity>() }
     private val failedLogin = {

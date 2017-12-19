@@ -13,9 +13,9 @@ import com.imploded.kotlingameapp.R
 import com.imploded.kotlingameapp.viewmodels.MainViewModel
 import com.imploded.kotlingameapp.adapters.GamesAdapter
 import com.imploded.kotlingameapp.model.Game
+import com.imploded.kotlingameapp.repository.MainRepository
 import com.imploded.kotlingameapp.utils.consume
 import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.startActivityForResult
 import org.jetbrains.anko.uiThread
 
@@ -25,7 +25,9 @@ class MainActivity : AppCompatActivity() {
         val RequestSortCode = 303
         val RequestFilterCode = 304
     }
-    private val viewModel = MainViewModel()
+
+    private val repo = MainRepository()
+    private val viewModel = MainViewModel(repo)
     private lateinit var recyclerView: RecyclerView
 
     private fun openDetail(game: Game) {
@@ -77,7 +79,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateView(sorting: String) {
         viewModel.activeSorting = sorting
-         val adapter = GamesAdapter(viewModel.getGamesForView(), {openDetail(it)})
+        val adapter = GamesAdapter(viewModel.getGamesForView(), {openDetail(it)})
         recyclerView.adapter = adapter
     }
 

@@ -12,6 +12,7 @@ import org.jetbrains.anko.uiThread
 class DetailActivity : AppCompatActivity() {
 
     private val viewModel = DetailViewModel()
+
     companion object {
         val ID = "DetailActivity:id"
     }

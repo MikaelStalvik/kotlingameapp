@@ -1,19 +1,19 @@
 package com.imploded.kotlingameapp.viewmodels
 
 import com.google.gson.Gson
+import com.imploded.kotlingameapp.interfaces.MainRepositoryInterface
 import com.imploded.kotlingameapp.model.FilterItem
 import com.imploded.kotlingameapp.model.Game
-import com.imploded.kotlingameapp.repository.MainRepository
 import com.imploded.kotlingameapp.ui.SortingActivity
 import com.imploded.kotlingameapp.utils.fromJson
 
-class MainViewModel {
+class MainViewModel(private val repository: MainRepositoryInterface) {
 
     var activeSorting = SortingActivity.SortingNameId
     private var ascending = true
 
     private val allGames: List<Game> by lazy {
-        MainRepository().getGames()
+        repository.getGames()
     }
     private var activeGames: List<Game> = listOf()
 
