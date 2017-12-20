@@ -16,7 +16,7 @@ class FilterUnitTests {
     }
 
     @Test
-    fun whenSelectingAllShouldReturnTrue() {
+    fun givenInFilterView_whenSelectingAll_thenAllItemsShallBeChecked() {
         // ARRANGE
         // ACT
         viewModel.selectAll()
@@ -25,7 +25,7 @@ class FilterUnitTests {
     }
 
     @Test
-    fun whenSelectingNoneShouldReturnTrue() {
+    fun givenInFilterViewAndAllIsSelected_whenSelectingNone_thenNoItemsShallBeCheckd() {
         // ARRANGE
         viewModel.selectAll()
         // ACT

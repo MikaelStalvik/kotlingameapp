@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Kotlin.iml" filepath="$PROJECT_DIR$/Kotlin.iml" />
+      <module fileurl="file://C:\dev\Kotlin\KotlinGameApp\Kotlin.iml" filepath="C:\dev\Kotlin\KotlinGameApp\Kotlin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/KotlinGameApp.iml" filepath="$PROJECT_DIR$/KotlinGameApp.iml" />
       <module fileurl="file://C:\dev\Kotlin\KotlinGameApp.iml" filepath="C:\dev\Kotlin\KotlinGameApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>

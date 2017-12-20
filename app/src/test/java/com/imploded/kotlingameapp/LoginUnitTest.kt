@@ -23,21 +23,21 @@ class LoginUnitTest {
     }
 
     @Test
-    fun whenLoginDetailsAreNotFilledEnsureIsValidIsNotTrue() {
+    fun givenNoFieldsAreFilled_whenIsValidInvoked_thenIsValidShallBeFalse() {
         assertFalse(viewModel.isValid())
     }
     @Test
-    fun whenOnlyUsernameIsFilledEnsureIsValidIsNotTrue() {
+    fun givenOnlyUsernameFilled_whenIsValidInvoked_thenIsValidShallBeFalse() {
         viewModel.userName = "mikael"
         assertFalse(viewModel.isValid())
     }
     @Test
-    fun whenOnlyPasswordIsFilledEnsureIsValidIsNotTrue() {
+    fun givenOnlyPasswordFilled_whenIsValidInvoked_thenIsValidShallBeFalse() {
         viewModel.userName = "mikael"
         assertFalse(viewModel.isValid())
     }
     @Test
-    fun whenAllDetailsAreFilledEnsureIsValidIsNotTrue() {
+    fun giveAllFieldsAreEntered_whenIsValidInvoked_thenIsValidShallBeTrue() {
         viewModel.userName = "mikael"
         viewModel.password = "12345"
         assertTrue(viewModel.isValid())
@@ -45,7 +45,7 @@ class LoginUnitTest {
 
 
     @Test
-    fun whenLoginFails() {
+    fun givenIncorrectCredentialsEntered_whenLoginInvoked_thenLoginStatusShallBeFalse() {
         var b = false
         viewModel.userName = "kalle"
         viewModel.password = "123"
@@ -57,7 +57,7 @@ class LoginUnitTest {
         assertFalse(b)
     }
     @Test
-    fun whenLoginSucceeds() {
+    fun givenCorrectCredentialsEntered_whenLoginInvoked_thenLoginStatusShallBeTrue() {
         var b = false
         viewModel.userName = "kalle"
         viewModel.password = "123"
