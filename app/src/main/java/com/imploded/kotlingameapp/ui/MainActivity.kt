@@ -15,6 +15,9 @@ import com.imploded.kotlingameapp.adapters.GamesAdapter
 import com.imploded.kotlingameapp.model.Game
 import com.imploded.kotlingameapp.repository.MainRepository
 import com.imploded.kotlingameapp.utils.consume
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.async
+import org.jetbrains.anko.coroutines.experimental.bg
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.startActivityForResult
 import org.jetbrains.anko.uiThread
@@ -43,12 +46,14 @@ class MainActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.game_list)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        doAsync {
-            viewModel.getGamesForView()
-            uiThread {
-                updateView(viewModel.activeSorting)
-            }
+        async(UI) {
+            val result = bg{ viewModel.getGamesForView()}
+            updateUi(result.await())
         }
+    }
+
+    private fun updateUi(games: List<Game>) {
+        updateView(viewModel.activeSorting)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

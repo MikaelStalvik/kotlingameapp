@@ -7,10 +7,19 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
+import com.google.gson.Gson
 import com.imploded.kotlingameapp.R
 import com.imploded.kotlingameapp.adapters.FilterAdapter
+import com.imploded.kotlingameapp.model.Game
+import com.imploded.kotlingameapp.utils.AppConstants
+import com.imploded.kotlingameapp.utils.fromJson
 import com.imploded.kotlingameapp.viewmodels.FilterViewModel
 import kotlinx.android.synthetic.main.activity_filter.*
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.async
+import org.jetbrains.anko.coroutines.experimental.asReference
+import org.jetbrains.anko.coroutines.experimental.bg
+import java.net.URL
 
 class FilterActivity : AppCompatActivity() {
 
@@ -22,6 +31,12 @@ class FilterActivity : AppCompatActivity() {
     private val viewModel = FilterViewModel()
 
     private lateinit var recyclerView: RecyclerView
+
+    fun getGames() : List<Game> {
+        val url = AppConstants.GetGamesUrl
+        val json = URL(url).readText()
+        return Gson().fromJson<List<Game>>(json).sortedBy { game -> game.name }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,4 +68,5 @@ class FilterActivity : AppCompatActivity() {
             recyclerView.adapter.notifyDataSetChanged()
         }
     }
+
 }

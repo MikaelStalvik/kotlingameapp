@@ -18,17 +18,6 @@ class LoginActivity : AppCompatActivity() {
         loginButton.isEnabled = isValid
     }
 
-/*
-    private val checkLoginStatus = { status: Boolean ->
-        if (status) {
-            startActivity<MainActivity>()
-        }
-        else {
-            loginButton.isEnabled = true
-            toast(getString(R.string.failedToLogin))
-        }
-    }*/
-
     private val showMainView = { startActivity<MainActivity>() }
     private val failedLogin = {
         runOnUiThread {

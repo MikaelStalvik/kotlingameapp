@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="com.github.kittinunf.fuel:fuel-android-1.4.0">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/fuel-android-1.4.0.aar/dc96874fa864810925553f9aabefebcf/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/fuel-android-1.4.0.aar/dc96874fa864810925553f9aabefebcf/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/fuel-android-1.4.0.aar/f9949e5d905631b47ec20ed07dd9ceb8/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/fuel-android-1.4.0.aar/f9949e5d905631b47ec20ed07dd9ceb8/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
