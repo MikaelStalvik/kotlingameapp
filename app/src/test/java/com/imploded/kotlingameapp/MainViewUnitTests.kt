@@ -29,13 +29,13 @@ class MainViewUnitTests {
     }
 
     @Test
-    fun givenViewModel_whenCallingGetGamesForView_thenGameCountShallBeFour() {
+    fun `When getting all games for view returned number of games shall be four`() {
         val games = viewModel.getGamesForView()
         assertEquals(4, games.count())
     }
 
     @Test
-    fun givenViewModelWithData_whenApplyingFilter_thenGameCountShallBeTwo() {
+    fun `When applying filter to view then returned number of games shall be two`() {
         val filter = listOf(FilterItem("A", true), FilterItem("D", true))
         val filterJson = Gson().toJson(filter)
         viewModel.activeFilter = filterJson

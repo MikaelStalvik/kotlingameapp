@@ -16,7 +16,7 @@ class FilterUnitTests {
     }
 
     @Test
-    fun givenInFilterView_whenSelectingAll_thenAllItemsShallBeChecked() {
+    fun `When in filter view and selecting all items ensure that all items are checked`() {
         // ARRANGE
         // ACT
         viewModel.selectAll()
@@ -25,7 +25,7 @@ class FilterUnitTests {
     }
 
     @Test
-    fun givenInFilterViewAndAllIsSelected_whenSelectingNone_thenNoItemsShallBeCheckd() {
+    fun `When in filter view and selecting no items ensure that no items are checked`() {
         // ARRANGE
         viewModel.selectAll()
         // ACT

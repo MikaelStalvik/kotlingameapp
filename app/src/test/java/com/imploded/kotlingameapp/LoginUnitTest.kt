@@ -11,7 +11,7 @@ import org.mockito.Mockito.*
 import java.lang.Thread.sleep
 
 
-/* A bit too many tests by purpose... */
+// A bit too many tests by purpose...
 class LoginUnitTest {
     private lateinit var repo: LoginRepositoryInterface
     private lateinit var viewModel: LoginViewModel
@@ -23,29 +23,28 @@ class LoginUnitTest {
     }
 
     @Test
-    fun givenNoFieldsAreFilled_whenIsValidInvoked_thenIsValidShallBeFalse() {
+    fun `When no fields are filled and isValid is invoked then result shall be false`() {
         assertFalse(viewModel.isValid())
     }
     @Test
-    fun givenOnlyUsernameFilled_whenIsValidInvoked_thenIsValidShallBeFalse() {
+    fun `When only username is filled and isValid is invoked then result shall be false`() {
         viewModel.userName = "mikael"
         assertFalse(viewModel.isValid())
     }
     @Test
-    fun givenOnlyPasswordFilled_whenIsValidInvoked_thenIsValidShallBeFalse() {
+    fun `When only password is filled and isValid is invoked then result shall be false`() {
         viewModel.userName = "mikael"
         assertFalse(viewModel.isValid())
     }
     @Test
-    fun giveAllFieldsAreEntered_whenIsValidInvoked_thenIsValidShallBeTrue() {
+    fun `When all files are filled in and isValid is invoked then result shall be true`() {
         viewModel.userName = "mikael"
         viewModel.password = "12345"
         assertTrue(viewModel.isValid())
     }
 
-
     @Test
-    fun givenIncorrectCredentialsEntered_whenLoginInvoked_thenLoginStatusShallBeFalse() {
+    fun `When incorrect credentials are filled then login status shall be false`() {
         var b = false
         viewModel.userName = "kalle"
         viewModel.password = "123"
@@ -57,7 +56,7 @@ class LoginUnitTest {
         assertFalse(b)
     }
     @Test
-    fun givenCorrectCredentialsEntered_whenLoginInvoked_thenLoginStatusShallBeTrue() {
+    fun `When correct credentials are filled then login status shall be true`() {
         var b = false
         viewModel.userName = "kalle"
         viewModel.password = "123"
